@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: backend-market-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/market_database
+    username: postgres_user
+    password: postgres_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # Use 'create', 'create-drop', 'update', or 'validate' as per your needs
+    show-sql: true # Enable to see SQL queries in the console
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+  # Optional: Configuring HikariCP connection pool (default connection pool for Spring Boot)
+#  datasource.hikari:
+#    minimum-idle: 5
+#    maximum-pool-size: 20
+#    idle-timeout: 30000
+#    pool-name: HikariCP
+#    max-lifetime: 1800000
+#    connection-timeout: 30000
+#    validation-timeout: 5000
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+jwt:
+  secret: your-very-secure-key
+  expiration: 3600000 # JWT expiration in milliseconds (1 hour)
+
