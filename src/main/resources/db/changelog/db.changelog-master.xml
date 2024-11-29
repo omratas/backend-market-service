@@ -5,7 +5,5 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-  <include file="/db/changelog/changeset-1-create-user-table.xml"/>
-  <include file="/db/changelog/changeset-2-create-roles-table.xml"/>
-  <include file="/db/changelog/changeset-3-insert-default-roles.xml"/>
+  <include file="db.changelog-master.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -27,8 +27,10 @@ public class User {
   private Long id;
 
   @NotBlank
-  @Column(unique = true)
-  private String username;
+  private String name;
+
+  @NotBlank
+  private String surname;
 
   @NotBlank
   private String password;

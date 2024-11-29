@@ -15,8 +15,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.xml
+#  liquibase:
+#    change-log: classpath:/db/changelog/db.changelog-master.xml
+#    enabled: true
 
   # Optional: Configuring HikariCP connection pool (default connection pool for Spring Boot)
 #  datasource.hikari:
@@ -36,4 +37,8 @@ logging:
 jwt:
   secret: your-very-secure-key
   expiration: 3600000 # JWT expiration in milliseconds (1 hour)
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
 

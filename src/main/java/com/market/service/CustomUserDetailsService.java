@@ -1,33 +1,34 @@
 package com.market.service;
 
+import com.market.exception.CustomException;
 import com.market.model.User;
 import com.market.repository.UserRepository;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
   private final UserRepository userRepository;
+  private final MessageSource messageSource;
 
-  public CustomUserDetailsService(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username);
-    if (user == null) {
-      throw new UsernameNotFoundException("User not found with username: " + username);
-    }
+  public UserDetails loadUserByUsername(String email) {
+    User user = userRepository.findByEmail(email)
+        .orElseThrow((() -> new CustomException(
+            messageSource.getMessage("error.user-not-found", new Object[]{email},
+                Locale.US), "10001")));
 
     return org.springframework.security.core.userdetails.User.builder()
-        .username(user.getUsername())
+        .username(user.getEmail())
         .password(user.getPassword())
         .authorities(user.getRoles().stream()
             .map(SimpleGrantedAuthority::new)
