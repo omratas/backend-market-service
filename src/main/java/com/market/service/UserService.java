@@ -2,7 +2,9 @@ package com.market.service;
 
 import com.market.exception.CustomException;
 import com.market.model.User;
+import com.market.model.response.UserResponse;
 import com.market.repository.UserRepository;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +28,18 @@ public class UserService {
   @Transactional
   public void save(User user) {
     userRepository.save(user);
+  }
+
+  public List<UserResponse> getAllUser(){
+    final List<User> users = userRepository.findAll();
+    return users.stream().map(this::toUserResponse).toList();
+  }
+
+  public UserResponse toUserResponse(User user){
+    return UserResponse.builder()
+        .id(user.getId())
+        .name(user.getName())
+        .surname(user.getSurname())
+        .email(user.getEmail()).build();
   }
 }
