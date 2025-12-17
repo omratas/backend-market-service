@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
 
     System.out.println("Hi");
+    System.out.println("Second");
 
     String authHeader = request.getHeader("Authorization");
     String username = null;
